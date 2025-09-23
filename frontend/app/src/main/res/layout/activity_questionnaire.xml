@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:layout_marginTop="26dp"
+    android:padding="16dp"
+    android:clipToPadding="false"
+    tools:context=".QuestionnaireActivity"
+    tools:ignore="HardcodedText, RtlSymmetry" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card"
+        android:padding="16dp" >
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/questionnaire_title"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/questionnaire_text"
+            android:textSize="14sp"
+            android:textColor="#555"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp" />
+
+        <TextView
+            android:id="@+id/tvResultPercents"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Perguntas -->
+        <!-- P1 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 - Você tem dores de cabeça frequentes?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb1Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb1N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P2 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 - Tem falta de apetite?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb2Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb2N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P3 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 - Dorme mal?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb3Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb3N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P4 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4 - Assusta-se com facilidade?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb4Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb4N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P5 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5 - Tem tremores nas mãos?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb5Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb5N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P6 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6 - Sente-se nervoso(a), tenso(a) ou preocupado(a)?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb6Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb6N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P7 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7 - Tem má digestão?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb7Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb7N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P8 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8 - Tem dificuldades de pensar com clareza?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb8Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb8N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P9 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9 - Tem se sentido triste ultimamente?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb9Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb9N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P10 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 - Tem chorado mais do que de costume?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb10Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb10N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P11 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11 - Tem dificuldade em realizar suas atividades diárias com satisfação?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb11Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb11N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P12 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 - Tem dificuldades para tomar decisões?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb12Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb12N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P13 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13 - Seu trabalho é difícil ou causa sofrimento?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb13Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb13N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P14 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14 - É incapaz de desempenhar um papel útil em sua vida?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb14Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb14N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P15 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 - Tem perdido o interesse pelas coisas?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb15Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb15N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P16 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16 - Você se sente uma pessoa inútil, sem préstimo?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb16Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb16N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P17 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="17 - Tem tido ideia de acabar com a vida?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb17Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb17N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P18 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18 - Sente-se cansado(a) o tempo todo?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb18Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb18N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P19 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19 - Você se cansa com facilidade?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb19Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb19N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- P20 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 - Tem sensações desagradáveis no estômago?"
+            android:textStyle="bold" />
+        <RadioGroup android:id="@+id/rgQ20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <RadioButton android:id="@+id/rb20Y"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="60dp"
+                android:text="@string/answer_yes" />
+            <RadioButton android:id="@+id/rb20N"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answer_no" />
+        </RadioGroup>
+
+        <!-- Botão Enviar -->
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_send"
+            android:backgroundTint="#4CAF50"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>
