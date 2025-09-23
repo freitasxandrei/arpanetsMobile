@@ -1,17 +1,16 @@
 package com.example.arpanetsmobilebackend.controller;
 
+import com.example.arpanetsmobilebackend.dto.QuestionnaireResponseDTO;
 import com.example.arpanetsmobilebackend.dto.QuestionnaireSubmissionDTO;
-import com.example.arpanetsmobilebackend.model.Questionnaire;
 import com.example.arpanetsmobilebackend.service.QuestionnaireService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/questionnaires") 
+@RequestMapping("/questionnaires")
 public class QuestionnaireController {
 
     private final QuestionnaireService questionnaireService;
@@ -21,12 +20,33 @@ public class QuestionnaireController {
     }
 
     @PostMapping
-    public ResponseEntity<?> submitQuestionnaire(@RequestBody QuestionnaireSubmissionDTO submissionDTO) {
-        try {
-            Questionnaire result = questionnaireService.submitQuestionnaire(submissionDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(result);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<QuestionnaireResponseDTO> submitQuestionnaire(@RequestBody QuestionnaireSubmissionDTO submissionDTO) {
+        QuestionnaireResponseDTO createdQuestionnaire = questionnaireService.createQuestionnaire(submissionDTO);
+        return new ResponseEntity<>(createdQuestionnaire, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<QuestionnaireResponseDTO>> getQuestionnairesByUser(@PathVariable Long userId) {
+        List<QuestionnaireResponseDTO> questionnaires = questionnaireService.getQuestionnairesByUserId(userId);
+        return ResponseEntity.ok(questionnaires);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<QuestionnaireResponseDTO> getQuestionnaireById(@PathVariable Long id) {
+        QuestionnaireResponseDTO questionnaire = questionnaireService.getQuestionnaireById(id);
+        return ResponseEntity.ok(questionnaire);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<QuestionnaireResponseDTO> updateQuestionnaire(@PathVariable Long id, @RequestBody QuestionnaireSubmissionDTO submissionDTO) {
+        QuestionnaireResponseDTO updatedQuestionnaire = questionnaireService.updateQuestionnaire(id, submissionDTO);
+        return ResponseEntity.ok(updatedQuestionnaire);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteQuestionnaire(@PathVariable Long id) {
+        questionnaireService.deleteQuestionnaire(id);
+        return ResponseEntity.noContent().build(); 
     }
 }
+
