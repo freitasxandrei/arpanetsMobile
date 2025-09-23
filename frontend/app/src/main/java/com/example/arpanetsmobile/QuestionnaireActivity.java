@@ -1,12 +1,12 @@
 package com.example.arpanetsmobile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,7 +53,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
             int selectedId = group.getCheckedRadioButtonId();
             if (selectedId == -1) {
                 runOnUiThread(() ->
-                        Toast.makeText(this, "Responda todas as perguntas antes de enviar!", Toast.LENGTH_SHORT).show()
+                        Utils.showToast(this, "Você precisa responder todas as perguntas!")
                 );
                 return; // sai sem enviar
             }
@@ -61,41 +61,42 @@ public class QuestionnaireActivity extends AppCompatActivity {
             answers.add(idName.endsWith("Y")); // true se "Sim"
         }
 
-        // TODO: pegar id real do usaer
-        int userId = 1;
+        // pegar id do usaer
+        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        int userId = prefs.getInt("userId", -1);
 
-        apiClient.enviarQuestionario(userId, answers, new okhttp3.Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() ->
-                        Utils.showErrorDialog(QuestionnaireActivity.this, e.getMessage())
-                );
-            }
-
-            @Override
-            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-
-                    // Supondo que backend retorna algo como:
-                    // { "totalScore": 12, "sufferingLevel": "str" }
-                    try {
-                        JSONObject json = new JSONObject(responseData);
-                        int totalScore = json.getInt("totalScore");
-                        String sufferingLevel = json.getString("sufferingLevel");
-
-                        runOnUiThread(() -> updateFront(totalScore, sufferingLevel));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
+        if (userId != -1) {
+            apiClient.submitQuestionnaire(userId, answers, new okhttp3.Callback() {
+                @Override
+                public void onFailure(okhttp3.Call call, IOException e) {
+                    e.printStackTrace();
                     runOnUiThread(() ->
-                            Utils.showErrorDialog(QuestionnaireActivity.this, "Erro HTTP: " + response.code())
+                            Utils.showToast(QuestionnaireActivity.this, "Erro de rede")
                     );
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                    String responseBody = response.body() != null ? response.body().string() : "";
+
+                    if (response.isSuccessful()) {
+                        try {
+                            JSONObject json = new JSONObject(responseBody);
+                            int totalScore = json.getInt("totalScore");
+                            String sufferingLevel = json.getString("sufferingLevel");
+
+                            runOnUiThread(() -> updateFront(totalScore, sufferingLevel));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        runOnUiThread(() ->
+                                Utils.showToast(QuestionnaireActivity.this, "Erro HTTP: " + response.code() + responseBody)
+                        );
+                    }
+                }
+            });
+        }
     }
 
     private void updateFront(int totalScore, String sufferingLevel) {

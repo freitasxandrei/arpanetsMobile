@@ -1,6 +1,7 @@
 package com.example.arpanetsmobile;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -20,5 +21,9 @@ public class Utils {
 
     public static void showSuccessDialog(Context context, String message) {
         showMessageDialog(context, "Sucesso", message);
+    }
+
+    public static void showToast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

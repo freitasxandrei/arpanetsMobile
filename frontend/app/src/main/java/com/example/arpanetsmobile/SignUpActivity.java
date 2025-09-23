@@ -62,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
         String gender = genderSpinner.getSelectedItem().toString();
 
         if (username.isEmpty() || password.isEmpty() || ageStr.isEmpty()) {
-            Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, "Preencha todos os campos!");
             return;
         }
 
@@ -74,20 +74,24 @@ public class SignUpActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
                 runOnUiThread(() ->
-                        Utils.showErrorDialog(SignUpActivity.this, e.getMessage())
+                        Utils.showToast(SignUpActivity.this, "Erro de rede")
                 );
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body() != null ? response.body().string() : "";
+
                 runOnUiThread(() -> {
                     if (response.isSuccessful()) {
-                        Toast.makeText(SignUpActivity.this, "Cadastro realizado!", Toast.LENGTH_SHORT).show();
+                        Utils.showToast(SignUpActivity.this, "Cadastro realizado!");
                         // volta para a tela de login
-                        startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                        intent.putExtra("username", username);
+                        startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(SignUpActivity.this, "Erro no cadastro", Toast.LENGTH_SHORT).show();
+                        Utils.showToast(SignUpActivity.this, "Erro no cadastro: " + responseBody);
                     }
                 });
             }
