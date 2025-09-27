@@ -1,16 +1,16 @@
 package com.example.arpanetsmobile;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import org.json.JSONObject;
 
@@ -18,9 +18,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class QuestionnaireActivity extends AppCompatActivity {
 
-    private RadioGroup[] groups = new RadioGroup[20];
+    private final RadioGroup[] groups = new RadioGroup[20];
+    private MaterialButton btnSend;
+    private CircularProgressIndicator btnProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +41,18 @@ public class QuestionnaireActivity extends AppCompatActivity {
             groups[i] = findViewById(resId);
         }
 
+        btnSend = findViewById(R.id.btnSend);
+        btnProgress = findViewById(R.id.btnProgress);
+
         // button send
-        Button btnSend = findViewById(R.id.btnSend);
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calcResult();
-            }
+        btnSend.setOnClickListener(v -> calcResult());
+    }
+
+    private void setLoading(boolean loading) {
+        runOnUiThread(() -> {
+            btnSend.setEnabled(!loading);
+            btnSend.setText(loading ? "" : "Enviar"); // some com o texto
+            btnProgress.setVisibility(loading ? View.VISIBLE : View.GONE);
         });
     }
 
@@ -53,7 +64,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
             int selectedId = group.getCheckedRadioButtonId();
             if (selectedId == -1) {
                 runOnUiThread(() ->
-                        Utils.showToast(this, "Você precisa responder todas as perguntas!")
+                        Utils.showToast(this, getString(R.string.missing_answers))
                 );
                 return; // sai sem enviar
             }
@@ -65,69 +76,59 @@ public class QuestionnaireActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         int userId = prefs.getInt("userId", -1);
 
-        if (userId != -1) {
-            apiClient.submitQuestionnaire(userId, answers, new okhttp3.Callback() {
-                @Override
-                public void onFailure(okhttp3.Call call, IOException e) {
-                    e.printStackTrace();
-                    runOnUiThread(() ->
-                            Utils.showToast(QuestionnaireActivity.this, "Erro de rede")
-                    );
-                }
+        // ativa loading
+        setLoading(true);
 
-                @Override
-                public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                    String responseBody = response.body() != null ? response.body().string() : "";
+        apiClient.submitQuestionnaire(userId, answers, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                runOnUiThread(() -> {
+                    setLoading(false);
+                    Utils.showToast(QuestionnaireActivity.this, "Erro de rede");
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (Response r = response) {
+                    String responseBody = r.body() != null ? response.body().string() : "";
 
                     if (response.isSuccessful()) {
                         try {
                             JSONObject json = new JSONObject(responseBody);
                             int totalScore = json.getInt("totalScore");
                             String sufferingLevel = json.getString("sufferingLevel");
+                            String responseDate = json.getString("responseDate");
 
-                            runOnUiThread(() -> updateFront(totalScore, sufferingLevel));
+                            boolean[] answersArray = new boolean[answers.size()];
+                            for (int i = 0; i < answers.size(); i++) {
+                                answersArray[i] = answers.get(i);
+                            }
+
+                            Intent intent = new Intent(QuestionnaireActivity.this, ResultActivity.class);
+                            intent.putExtra("totalScore", totalScore);
+                            intent.putExtra("sufferingLevel", sufferingLevel);
+                            intent.putExtra("responseDate", responseDate);
+                            intent.putExtra("answers", answersArray);
+
+                            startActivity(intent);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                    } else if (response.code() == 404) {
+                        runOnUiThread(() ->
+                                Utils.showToast(QuestionnaireActivity.this, getString(R.string.user_not_found))
+                        );
                     } else {
                         runOnUiThread(() ->
                                 Utils.showToast(QuestionnaireActivity.this, "Erro HTTP: " + response.code() + responseBody)
                         );
                     }
+
+                    setLoading(false);
                 }
-            });
-        }
-    }
-
-    private void updateFront(int totalScore, String sufferingLevel) {
-        int percentYes = totalScore * 100 / 20;
-        int percentNo = 100 - percentYes;
-
-        String resultPercents = "SIM (" + percentYes + "%)  NÃO (" + percentNo + "%)";
-
-        int color;
-        if (totalScore <= 7) {
-            color = ContextCompat.getColor(this, R.color.result_low);
-        } else if (totalScore <= 14) {
-            color = ContextCompat.getColor(this, R.color.result_medium);
-        } else {
-            color = ContextCompat.getColor(this, R.color.result_high);
-        }
-
-        TextView tvDescription = findViewById(R.id.tvDescription);
-        TextView tvResult = findViewById(R.id.tvResult);
-        TextView tvResultPercents = findViewById(R.id.tvResultPercents);
-
-        tvDescription.setVisibility(View.GONE);
-        tvResult.setVisibility(View.VISIBLE);
-        tvResultPercents.setVisibility(View.VISIBLE);
-
-        tvResult.setText(sufferingLevel); // recebido do back
-        tvResult.setTextColor(color);
-
-        tvResultPercents.setText(resultPercents);
-
-        ScrollView scrollView = findViewById(R.id.scrollView);
-        scrollView.post(() -> scrollView.fullScroll(View.FOCUS_UP));
+            }
+        });
     }
 }

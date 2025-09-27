@@ -14,8 +14,8 @@
     <string name="action_back">Voltar</string>
     <string name="questionnaire_title">Como está sua saúde mental?</string>
     <string name="questionnaire_text">Responda ao questionário SRQ-20 sobre como se sentiu nos últimos 30 dias.
-        \nSão 20 perguntas (Sim/Não) que avaliam sofrimento mental, mas não dão diagnóstico (só um profissional pode diagnosticar).
-        \nCada Sim soma 1 ponto, variando de 0 (sem sofrimento) a 20 (sofrimento grave). Pontuação ≥ 7 indica possível sofrimento.
+        \n\nSão 20 perguntas (Sim/Não) que avaliam sofrimento mental, mas não dão diagnóstico (só um profissional pode diagnosticar).
+        \n\nCada Sim soma 1 ponto, variando de 0 (sem sofrimento) a 20 (sofrimento grave). Pontuação ≥ 7 indica possível sofrimento.
         \n\nResponda todas as questões:</string>
     <string name="answer_yes">Sim</string>
     <string name="answer_no">Não</string>
@@ -25,4 +25,12 @@
     <string name="result_medium">Sofrimento mental moderado.</string>
     <string name="result_high">Sofrimento mental grave.</string>
     <string name="action_start_questionnaire">Iniciar o questionário</string>
+    <string name="response_date">Data de resposta:</string>
+    <string name="result_title">Resultado do Questionário SRQ-20</string>
+    <string name="result_title2">Detalhes das respostas:</string>
+    <string name="result_score">Pontuação Total:</string>
+    <string name="action_retest">Refazer Questionário</string>
+    <string name="label_question_number">Pergunta </string>
+    <string name="user_not_found">Usuário não encontrado, faça login novamente!</string>
+    <string name="missing_answers">Você precisa responder todas as perguntas!</string>
 </resources>

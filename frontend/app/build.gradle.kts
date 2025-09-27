@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.arpanetsmobile"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -42,4 +42,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation(libs.material)
 }
