@@ -1,15 +1,23 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# IntelliJ / Android Studio
+.idea/*
+!.idea/codeStyles
+!.idea/runConfigurations
+
+# Log / Cache
+*.log
+*.cache
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+captures/
+
+# Keystore (não versionar senhas!)
+*.jks
+*.keystore
+
+# Outras pastas geradas
 local.properties
+.DS_Store
