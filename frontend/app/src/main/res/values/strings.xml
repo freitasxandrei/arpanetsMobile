@@ -1,18 +1,15 @@
 <resources>
     <string name="app_name">Arpanets</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="signup_title">CADASTRAR</string>
+    <string name="signup_title">Cadastrar</string>
     <string name="signup_hint">Insira suas credenciais para se cadastrar na Arpanets</string>
-    <string name="login_title">ENTRAR</string>
+    <string name="login_title">Entrar</string>
     <string name="login_hint">Insira suas credenciais para acessar a Arpanets</string>
     <string name="prompt_user">Insira seu usuário</string>
     <string name="prompt_password">Insira sua senha</string>
     <string name="action_sign_in">Acessar</string>
     <string name="action_sign_up">Cadastrar</string>
-    <string name="welcome">"Bem vindo !"</string>
     <string name="invalid_username">Usuário inválido</string>
     <string name="invalid_password">Senha deve ter >5 caracteres</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="prompt_age">Insira sua idade</string>
     <string name="action_back">Voltar</string>
     <string name="questionnaire_title">Como está sua saúde mental?</string>
